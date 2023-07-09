@@ -8,12 +8,13 @@ import { BiSearch } from "react-icons/bi";
 import Box from "./Box";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
+import { Song } from "@/types";
 
 interface IProps {
-  children: React.ReactNode;
+  songs: Song[];
 }
 
-const Sidebar = ({ children }: IProps) => {
+const Sidebar = ({songs}: IProps) => {
   const pathname = usePathname();
 
   const routes = useMemo(() => [
@@ -32,19 +33,8 @@ const Sidebar = ({ children }: IProps) => {
   ], [pathname]);
 
   return (
-    <div className="flex h-full">
-      <div
-        className="
-          hidden
-          md:flex
-          flex-col
-          gap-y-4
-          bg-black
-          h-full
-          w-[300px]
-          p-4
-        "
-      >
+    <div className="flex h-full gap-4">
+      <div className="sidebar-wrapper">
         <Box>
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map((item) => (
@@ -56,12 +46,9 @@ const Sidebar = ({ children }: IProps) => {
           </div>
         </Box>
         <Box className="overflow-y-auto h-full">
-          <Library />
+          <Library songs={songs} />
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto py-4 pr-4">
-        {children}
-      </main>
     </div>
   )
 };

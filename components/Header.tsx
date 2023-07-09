@@ -7,6 +7,10 @@ import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import CustomButton from './CustomButton';
 import useAuthModal from '@/hooks/useAuthModal';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useUser } from '@/hooks/useUser';
+import {FaUserAlt} from "react-icons/fa"
+import { toast } from 'react-hot-toast';
 
 interface IProps {
   children: React.ReactNode;
@@ -17,9 +21,21 @@ const Header = ({ children, className }: IProps) => {
   const authModal = useAuthModal();
   const router = useRouter();
 
-  const handleLogout = () => {
+  const supabaseClient = useSupabaseClient();
+  const { user } = useUser();
 
-  }
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+
+    router.refresh();
+
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success("Logged out!")
+    }
+  };
+  
 
   return (
     <div className={twMerge(`
@@ -32,81 +48,48 @@ const Header = ({ children, className }: IProps) => {
     )}>
       <div className="w-full mb-4 flex items-center justify-between">
         <div className="hidden md:flex gap-x-2 items-center">
-          <button
-            className="
-              rounded-full
-              bg-black
-              flex
-              items-center
-              justify-center
-              hover:opacity-70
-              transition"
-            onClick={() => router.back()}
-          >
+          <button className="prev-button" onClick={() => router.back()}>
             <RxCaretLeft className="text-white" size={35} />
           </button>
-          <button
-            className="
-              rounded-full
-              bg-black
-              flex
-              items-center
-              justify-center
-              hover:opacity-70
-              transition
-            "
-            onClick={() => router.forward()}
-          >
+          <button className="next-button" onClick={() => router.forward()}>
             <RxCaretRight className="text-white" size={35} />
           </button>
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
-          <button className="
-              rounded-full
-              p-2
-              bg-white
-              flex
-              items-center
-              justify-center
-              hover:opacity-70
-              transition
-            "
-          >
+          <button className="mobile-home-button">
             <HiHome className="text-black" size={20} />
           </button>
-          <button className="
-              rounded-full
-              p-2
-              bg-white
-              flex
-              items-center
-              justify-center
-              hover:opacity-70
-              transition
-            "
-          >
+          <button className="mobile-search-button">
             <BiSearch className="text-black" size={20} />
           </button>
         </div>
         <div className="flex justify-between items-center gap-x-4">
-          <>
-            <div>
+          {user ? (
+            <div className="flex gap-4 items-center">
+              <CustomButton className="bg-white px-6 py-2" onClick={handleLogout}>
+                Logout
+              </CustomButton>
               <CustomButton
-                onClick={authModal.onOpen}
-                className="bg-transparent text-neutral-300 font-medium"
+                onClick={() => router.push("/account")}
+                className="bg-white"
               >
-                Sign up
+                <FaUserAlt />
               </CustomButton>
             </div>
-            <div>
-              <CustomButton
-                onClick={authModal.onOpen}
-                className="bg-white px-6 py-2"
-              >
-                Log in
-              </CustomButton>
-            </div>
-          </>
+          ) : (
+            <>
+              <div>
+                <CustomButton onClick={authModal.onOpen} className="bg-transparent text-neutral-300 font-medium">
+                  Sign up
+                </CustomButton>
+              </div>
+              <div>
+                <CustomButton onClick={authModal.onOpen} className="bg-white px-6 py-2">
+                  Log in
+                </CustomButton>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {children}

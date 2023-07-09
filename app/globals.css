@@ -8,4 +8,62 @@ body,
   height: 100%;
   background-color: black;
   color-scheme: dark;
-}
+};
+
+@layer components {
+  .dialog-wrapper {
+    @apply fixed drop-shadow-md border border-neutral-700 top-[50%] left-[50%] max-h-full h-full md:h-auto md:max-h-[85vh] w-full md:w-[90vw] md:max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-800 p-[25px] focus:outline-none
+  };
+
+  .dialog-close-button {
+    @apply text-neutral-400 hover:text-white absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:outline-none
+  };
+
+  .prev-button {
+    @apply rounded-full bg-black flex items-center justify-center hover:opacity-70 transition
+  };
+
+  .next-button {
+    @apply rounded-full bg-black flex items-center justify-center hover:opacity-70 transition
+  };
+
+  .mobile-home-button {
+    @apply rounded-full p-2 bg-white flex items-center justify-center hover:opacity-70 transition
+  };
+
+  .mobile-search-button {
+    @apply rounded-full p-2 bg-white flex items-center justify-center hover:opacity-70 transition
+  };
+
+  .grid-wrapper {
+    @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4
+  };
+
+  .sidebar-wrapper {
+    @apply hidden md:flex flex-col gap-y-4 bg-black h-full w-[300px] py-4 pl-4
+  };
+
+  .main-content {
+    @apply bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto
+  };
+
+  .upload-input {
+    @apply flex w-full rounded-md bg-neutral-700 border border-transparent px-3 py-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none
+  };
+
+  .song-grid-wrapper {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-8 gap-4 mt-4
+  };
+
+  .song-item {
+    @apply relative flex flex-col items-center justify-center rounded-md overflow-hidden gap-x-4 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition p-3
+  };
+
+  .play-button {
+    @apply transition opacity-0 rounded-full flex items-center bg-green-500 p-4 drop-shadow-md translate-y-1/4 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110
+  };
+
+  .sidebar-song-item {
+    @apply flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md
+  };
+};
