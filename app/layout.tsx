@@ -7,6 +7,7 @@ import UserProvider from '@/providers/UserProvider';
 import ModalProvider from '@/providers/ModalProvider';
 import ToasterProvider from '@/providers/ToasterProvider';
 import getSongsByUserId from '@/actions/getSongsByUserId';
+import Player from '@/components/Player';
 
 const font = Figtree({ subsets: ['latin'] });
 
@@ -33,10 +34,9 @@ export default async function RootLayout({
             <ModalProvider />
             <div className="flex h-full gap-4">
               <Sidebar songs={userSongs} />
-              <main className="h-full flex-1 overflow-y-auto py-4 pr-4">
-                {children}
-              </main>
+              {children}
             </div>
+            <Player />
           </UserProvider>
         </SupabaseProvider>
       </body>

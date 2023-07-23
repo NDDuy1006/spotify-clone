@@ -14,8 +14,7 @@ const SongItem = ({ data, onClick }: IProps) => {
   const imageSrc = useLoadImage(data);
 
   return (
-    <div className="group song-item
-      ">
+    <div onClick={() => onClick(data.id)} className="group song-item">
       <div className="relative aspect-square w-full h-full rounded-md overflow-hidden">
         <Image
           className="object-cover w-full h-full"

@@ -1,6 +1,4 @@
 import getSongs from "@/actions/getSongs";
-import Header from "@/components/Header";
-import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
 
 export const revalidate = 0;
@@ -9,29 +7,8 @@ export default async function Home() {
   const songs = await getSongs();
 
   return (
-    <div className="main-content">
-      <Header>
-        <div className="mb-2">
-          <h2 className="text-white text-3xl font-semibold">
-            Welcome back
-          </h2>
-          <div className="grid-wrapper">
-            <ListItem
-              image="/images/liked.png"
-              name="Liked songs"
-              href="linked"
-            />
-          </div>
-        </div>
-      </Header>
-      <div className="mt-2 mb-7 px-6">
-        <div className="flex justify-between items-center">
-          <h2 className="text-white text-2xl font-semibold">
-            Newest Songs
-          </h2>
-        </div>
-        <PageContent songs={songs} />
-      </div>
-    </div>
+    <main>
+      <PageContent songs={songs} />
+    </main>
   )
 };
